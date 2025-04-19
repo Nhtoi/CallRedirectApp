@@ -3,31 +3,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:gravity="top|center_horizontal"
+    android:background="@android:color/transparent">
 
-    <TextView
-        android:id="@+id/callerIdTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Incoming call"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+    <!-- FrameLayout to Overlay Background, Text, and Buttons -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="16dp">
 
-    <Button
-        android:id="@+id/answerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Answer"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp" />
+        <!-- Background View Covering Both Banner and Buttons -->
 
-    <Button
-        android:id="@+id/rejectButton"
-        android:layout_width="73dp"
-        android:layout_height="75dp"
-        android:text="Reject"
-        android:textSize="18sp" />
+        <!-- TextView for Caller ID -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#4682B4" />
+
+        <TextView
+            android:id="@+id/callerIdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incoming Call"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="16dp" />
+
+        <!-- Button Container -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="137dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="-20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageButton
+                android:id="@+id/answerButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="32dp"
+                android:background="@android:color/transparent"
+                android:clipToOutline="true"
+                android:contentDescription="Answer Call"
+                android:elevation="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/answer_transparent" />
+
+            <ImageButton
+                android:id="@+id/redirectButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginEnd="32dp"
+                android:background="@android:color/transparent"
+                android:clipToOutline="true"
+                android:contentDescription="Redirect Call"
+                android:elevation="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/redirect" />
+
+            <ImageButton
+                android:id="@+id/rejectButton"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@android:color/transparent"
+                android:clipToOutline="true"
+                android:contentDescription="Reject Call"
+                android:elevation="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/buttons_removebg_preview" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
