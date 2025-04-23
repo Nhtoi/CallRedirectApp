@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
+import java.util.Timer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,7 +43,6 @@ public class CallDivertActivity extends Activity {
         ImageButton answerButton = findViewById(R.id.answerButton);
         ImageButton redirectButton = findViewById(R.id.redirectButton);
         ImageButton hangupButton = findViewById(R.id.rejectButton);
-
         executor = Executors.newSingleThreadExecutor();  // Create a single-thread executor
 
         answerButton.setOnClickListener(v -> {
@@ -51,13 +51,21 @@ public class CallDivertActivity extends Activity {
         });
 
         redirectButton.setOnClickListener(v -> {
-            hangUpCall();
             if (userId != null) {
-                executor.submit(() -> postRedirectCall(userId));  // Execute the POST request on background thread
+                executor.submit(() -> {
+                    postRedirectCall(userId);
+                    try {
+                        Thread.sleep(250); // Wait 250ms after POST
+                    } catch (InterruptedException e) {
+                        Log.e(TAG, "Delay interrupted", e);
+                    }
+                    hangUpCall();
+                    runOnUiThread(this::finish);
+                });
             } else {
                 Log.e(TAG, "User ID is null, cannot post redirect call.");
+                finish();
             }
-            finish();
         });
 
         hangupButton.setOnClickListener(v -> {
@@ -90,6 +98,7 @@ public class CallDivertActivity extends Activity {
 
     private void executeShellCommand(String command) {
         try {
+
             Process su = Runtime.getRuntime().exec("su");
             DataOutputStream os = new DataOutputStream(su.getOutputStream());
             os.writeBytes(command + "\n");
